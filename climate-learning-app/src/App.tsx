@@ -1,5 +1,6 @@
 import { Route, Routes } from "react-router-dom";
 import AppShell from "./components/AppShell";
+import ProtectedRoute from "@/components/ProtectedRoute";
 
 import Login from "@/pages/Login";
 import DashboardInvestigasi from "@/pages/DashboardInvestigasi";
@@ -14,10 +15,40 @@ export default function App() {
       <Routes>
         <Route path="/" element={<Login />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/investigasi" element={<DashboardInvestigasi />} />
-        <Route path="/kuis" element={<CheckpointKuis />} />
-        <Route path="/simulator" element={<SimulatorAI />} />
-        <Route path="/galeri" element={<Galeri />} />
+
+        <Route
+          path="/investigasi"
+          element={
+            <ProtectedRoute>
+              <DashboardInvestigasi />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/kuis"
+          element={
+            <ProtectedRoute>
+              <CheckpointKuis />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/simulator"
+          element={
+            <ProtectedRoute>
+              <SimulatorAI />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/galeri"
+          element={
+            <ProtectedRoute>
+              <Galeri />
+            </ProtectedRoute>
+          }
+        />
+
         <Route path="*" element={<NotFound />} />
       </Routes>
     </AppShell>
