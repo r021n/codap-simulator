@@ -3,9 +3,27 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 
+import { addDoc, collection, serverTimestamp } from "firebase/firestore";
+import { db } from "@/lib/firebase";
+import { useAuth } from "@/lib/useAuth";
+
 export default function SimulatorAI() {
   const [input, setInput] = useState("");
   const [output, setOutput] = useState<string | null>(null);
+
+  const { user } = useAuth();
+
+  async function saveSolutionTest() {
+    if (!user) return;
+
+    await addDoc(collection(db, "solutions"), {
+      user_id: user.uid,
+      input_siswa: input,
+      ai_response: output ?? "(no output)",
+      skor_ai: null,
+      timestamp: serverTimestamp(),
+    });
+  }
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
@@ -24,16 +42,25 @@ export default function SimulatorAI() {
             placeholder="Ketik solusi kamu..."
             className="min-h-40"
           />
-          <Button
-            onClick={() =>
-              setOutput(
-                "Placeholder output AI: estimasi dampak akan muncul di sini (Gemini via backend).",
-              )
-            }
-            disabled={!input.trim()}
-          >
-            Simulasikan
-          </Button>
+          <div className="flex gap-2">
+            <Button
+              onClick={() =>
+                setOutput(
+                  "Placeholder output AI: estimasi dampak akan muncul di sini (Gemini via backend).",
+                )
+              }
+              disabled={!input.trim()}
+            >
+              Simulasikan
+            </Button>
+            <Button
+              variant="outline"
+              onClick={saveSolutionTest}
+              disabled={!output}
+            >
+              Simpan Solusi (test)
+            </Button>
+          </div>
         </CardContent>
       </Card>
 

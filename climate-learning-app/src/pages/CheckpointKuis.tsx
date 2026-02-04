@@ -3,6 +3,10 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { Button } from "@/components/ui/button";
 
+import { addDoc, collection, serverTimestamp } from "firebase/firestore";
+import { db } from "@/lib/firebase";
+import { useAuth } from "@/lib/useAuth";
+
 export default function CheckpointKuis() {
   const questions = [
     "Pada tahun berapa suhu tertinggi tercatat?",
@@ -12,6 +16,21 @@ export default function CheckpointKuis() {
 
   const [idx, setIdx] = useState(0);
   const progress = Math.round(((idx + 1) / questions.length) * 100);
+
+  const { user } = useAuth();
+
+  async function submitTest() {
+    if (!user) return;
+
+    await addDoc(collection(db, "answers"), {
+      user_id: user.uid,
+      jawaban_kuis: [
+        { q: "dummy-q1", a: "dummy-a1" },
+        { q: "dummy-q2", a: "dummy-a2" },
+      ],
+      timestamp: serverTimestamp(),
+    });
+  }
 
   return (
     <div className="max-w-3xl">
@@ -52,6 +71,9 @@ export default function CheckpointKuis() {
               Next
             </Button>
           </div>
+          <Button variant="secondary" onClick={submitTest}>
+            Submit Jawaban (test)
+          </Button>
         </CardContent>
       </Card>
     </div>
