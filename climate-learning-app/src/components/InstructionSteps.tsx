@@ -36,14 +36,16 @@ const STEPS: Step[] = [
 const LS_KEY = "investigasi_steps_v1";
 
 export default function InstructionSteps() {
-  const [doneMap, setDoneMap] = useState<Record<string, boolean>>({});
-
-  useEffect(() => {
-    const raw = localStorage.getItem(LS_KEY);
-    if (raw) {
-      setDoneMap(JSON.parse(raw));
+  const [doneMap, setDoneMap] = useState<Record<string, boolean>>(() => {
+    try {
+      const raw = localStorage.getItem(LS_KEY);
+      if (!raw) return {};
+      const parsed = JSON.parse(raw);
+      return parsed && typeof parsed === "object" ? parsed : {};
+    } catch {
+      return {};
     }
-  }, []);
+  });
 
   useEffect(() => {
     localStorage.setItem(LS_KEY, JSON.stringify(doneMap));

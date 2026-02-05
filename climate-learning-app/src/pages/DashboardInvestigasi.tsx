@@ -39,13 +39,12 @@ export default function DashboardInvestigasi() {
           </div>
 
           <div className="mt-3 text-xs text-slate-500 space-y-1">
-            <div className="font-medium text-slate-600">
-              Cara import (manual, Opsi A):
-            </div>
+            <div className="font-medium text-slate-600">Cara import:</div>
             <ol className="list-decimal ml-5 space-y-1">
               <li>
-                Klik <b>Download CSV</b> (di atas).
+                Klik <b>Download CSV</b> (di atas CODAP).
               </li>
+              <li>Klik "Create New Document"</li>
               <li>
                 Di CODAP: cari menu <b>File</b> → <b>Import</b> (atau tombol
                 Import Data).
