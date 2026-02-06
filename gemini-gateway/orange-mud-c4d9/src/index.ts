@@ -102,7 +102,7 @@ Aturan:
 
 		const apiKey = env.GEMINI_API_KEY;
 		const geminiUrl =
-			'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=' + encodeURIComponent(apiKey);
+			'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-lite:generateContent?key=' + encodeURIComponent(apiKey);
 
 		const geminiResp = await fetch(geminiUrl, {
 			method: 'POST',
