@@ -9,7 +9,7 @@
 	"compatibility_date": "2026-02-05",
 	"vars": {
 		"FIREBASE_PROJECT_ID": "studio-6655902681-8f4a5",
-		"ALLOWED_ORIGIN": "http://localhost:5173",
+		"ALLOWED_ORIGIN": "https://studio-6655902681-8f4a5.firebaseapp.com",
 	},
 	"observability": {
 		"enabled": true,
